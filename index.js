@@ -96,7 +96,7 @@ client.on('interactionCreate', async interaction => {
 			);
 
 		await interaction.reply({ content: 'Chose build', components: [row] });
-
+		
 		client.on('interactionCreate', async interaction => {
 		if (!interaction.isSelectMenu()) return;
            if (interaction.values[0] == "live") {
@@ -110,8 +110,8 @@ client.on('interactionCreate', async interaction => {
 						await interaction.reply(`${body}`);
 						return;
 					}
-
-					await interaction.reply(`Key: ${body} l Build: User`);	
+					
+					await interaction.reply(`Key: ${body} l Build: User`);
 				})
             }
 			if (interaction.values[0] == "beta") {
@@ -143,11 +143,11 @@ client.on('interactionCreate', async interaction => {
 					
 					await interaction.reply(`Key: ${body} l Build: Debug`);
 				})
-            }							
+            }			
 		});
 	} else if (commandName === 'lockup') {
 		const user = interaction.options.getString("lockup");
-		request.post('https://obex.pink/api/interact.php', { form: { api_key: API_KEY, req_type: 'lookup', username: user } }, async (error, response, body) => {
+		request.post('https://obex.pink/api/interact.php', { form: { api_key: API_KEY, req_type: 'lookup', identifier: user } }, async (error, response, body) => {
 			if (error) {
 				await interaction.reply(`${error}`);
 				return;
@@ -159,11 +159,11 @@ client.on('interactionCreate', async interaction => {
 			}
 			
 			const data = JSON.parse(body)			
-			await interaction.reply(`Username: ${data.Username} l ID: ${data.Id} l Script: ${data.Script} l Build: ${data.Build} l Serials: ${data.Serials} l Blacklist: ${data.Blacklist} `);
+			await interaction.reply(`Username: ${data.Username} l ID: ${data.Id} l Script: ${data.Script} l Serials: ${data.Serials} l Blacklist: ${data.Blacklist} `);
 		})
 	} else if (commandName === 'remove') {
 		const user = interaction.options.getString("remove");
-		request.post('https://obex.pink/api/interact.php', { form: { api_key: API_KEY, req_type: 'remove', username: user } }, async (error, response, body) => {
+		request.post('https://obex.pink/api/interact.php', { form: { api_key: API_KEY, req_type: 'remove', identifier: user } }, async (error, response, body) => {
 			if (error) {
 				await interaction.reply(`${error}`);
 				return;
@@ -179,7 +179,7 @@ client.on('interactionCreate', async interaction => {
 	} else if (commandName === 'blacklist') {
 		const user = interaction.options.getString("blacklist");
 		const reason_b = interaction.options.getString("reason");
-		request.post('https://obex.pink/api/interact.php', { form: { api_key: API_KEY, req_type: 'blacklist', username: user, reason: reason_b } }, async (error, response, body) => {
+		request.post('https://obex.pink/api/interact.php', { form: { api_key: API_KEY, req_type: 'blacklist', identifier: user, reason: reason_b } }, async (error, response, body) => {
 			if (error) {
 				await interaction.reply(`${error}`);
 				return;
